@@ -4,6 +4,7 @@ import com.bogdan.entity.User;
 import com.bogdan.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,7 +26,7 @@ public class MainController {
 
     @GetMapping("/users")
     public String main(Map<String, Object> model) {
-        Iterable<User> findAllUsers = userRepo.findAll();
+        Iterable<User> findAllUsers = userRepo.findAllByOrderByIdAsc();
         model.put("users", findAllUsers);
         return "users";
     }
@@ -47,9 +48,10 @@ public class MainController {
         return "userPage";
     }
 
+    @Transactional
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") int id) {
-        userRepo.deleteUserById(id);
+        userRepo.deleteById(id);
         return "redirect:/users";
     }
 
@@ -62,6 +64,6 @@ public class MainController {
     @PostMapping("/updateUser")
     public String update(@ModelAttribute("user") User user) {
         userRepo.save(user);
-        return "redirect:/userPage/" + user.getId();
+        return "redirect:/user/" + user.getId();
     }
 }
