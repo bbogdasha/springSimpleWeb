@@ -1,4 +1,4 @@
-package com.bogdan.entity;
+package com.bogdan.domain;
 
 import javax.persistence.*;
 

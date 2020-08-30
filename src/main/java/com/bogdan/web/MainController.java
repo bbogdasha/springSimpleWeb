@@ -1,15 +1,12 @@
-package com.bogdan.controller;
+package com.bogdan.web;
 
-import com.bogdan.entity.User;
+import com.bogdan.domain.User;
 import com.bogdan.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -25,7 +22,7 @@ public class MainController {
     }
 
     @GetMapping("/users")
-    public String main(Map<String, Object> model) {
+    public String users(Map<String, Object> model) {
         Iterable<User> findAllUsers = userRepo.findAllByOrderByIdAsc();
         model.put("users", findAllUsers);
         return "users";
